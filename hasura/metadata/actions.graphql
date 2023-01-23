@@ -1,0 +1,13 @@
+type Mutation {
+  register(
+    email: String
+    name: String
+    password: String
+  ): registerResponse
+}
+
+type registerResponse {
+  id: String!
+  name: String!
+}
+

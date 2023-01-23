@@ -1,0 +1,15 @@
+actions:
+  - name: register
+    definition:
+      kind: synchronous
+      handler: https://ae2b-152-58-27-35.in.ngrok.io/register
+      forward_client_headers: true
+      headers:
+        - name: x-hasura-admin-secret
+          value: klBiEH1IdfXaXYkHmoMThJKqcgzyogwgzBKZAVBP5fucay3mGshTIWAERmAcq7qZ
+custom_types:
+  enums: []
+  input_objects: []
+  objects:
+    - name: registerResponse
+  scalars: []
