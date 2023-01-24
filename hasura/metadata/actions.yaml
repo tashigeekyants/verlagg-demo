@@ -2,7 +2,7 @@ actions:
   - name: register
     definition:
       kind: synchronous
-      handler: https://ae2b-152-58-27-35.in.ngrok.io/register
+      handler: https://b18b-182-70-25-111.in.ngrok.io/auth/register
       forward_client_headers: true
       headers:
         - name: x-hasura-admin-secret

@@ -1,4 +1,4 @@
-import { Maybe } from "./globalTypes.js";
+import { Maybe } from './globalTypes.js';
 
 export type USER = {
   email?: string;
