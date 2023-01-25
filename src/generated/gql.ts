@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n  ) {\n    insert_users_one(\n      object: { email: $email, name: $name, password: $password }\n    ) {\n      id\n      name\n    }\n  }\n": types.Register_UserDocument,
+    "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n": types.Register_UserDocument,
     "\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n": types.Get_User_By_EmailDocument,
 };
 
@@ -34,7 +34,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n  ) {\n    insert_users_one(\n      object: { email: $email, name: $name, password: $password }\n    ) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n  ) {\n    insert_users_one(\n      object: { email: $email, name: $name, password: $password }\n    ) {\n      id\n      name\n    }\n  }\n"];
+export function graphql(source: "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

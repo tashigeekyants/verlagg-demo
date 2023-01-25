@@ -4,10 +4,10 @@ import {
   Get_User_By_EmailQueryVariables,
   Register_UserMutation,
   Register_UserMutationVariables,
-} from '../../generated/graphql';
-import { GET_USER_BY_EMAIL, REGISTER_USER } from '../../queries/auth.js';
-import { client } from '../../utils/apollo.js';
-import { generateJWT } from '../../utils/jwt.js';
+} from '../../../generated/graphql';
+import { GET_USER_BY_EMAIL, REGISTER_USER } from '../../../queries/auth.js';
+import { client } from '../../../utils/apollo.js';
+import { generateJWT } from '../../../utils/jwt.js';
 
 export async function signInWithGoogle(req: Request, res: Response) {
   try {
@@ -37,6 +37,7 @@ export async function signInWithGoogle(req: Request, res: Response) {
           email: req.user?.email,
           name: req.user?.name,
           password: null,
+          verified: true,
         },
       });
 
@@ -55,8 +56,8 @@ export async function signInWithGoogle(req: Request, res: Response) {
         'X-Hasura-User-Id': userId,
       },
     });
-
-    return res.status(200).json({ token, message: 'Login success' });
+    console.log({ token });
+    return res.status(200).json({ token });
   } catch (error) {
     return res.json({ message: error?.message || 'Internal server error' });
   }

@@ -7,9 +7,16 @@ actions:
       headers:
         - name: x-hasura-admin-secret
           value: klBiEH1IdfXaXYkHmoMThJKqcgzyogwgzBKZAVBP5fucay3mGshTIWAERmAcq7qZ
+  - name: signInWithGoogle
+    definition:
+      kind: synchronous
+      handler: https://5e86-182-70-25-111.in.ngrok.io/auth/signInWithGoogle
+    comment: This action is used to sign in with google
 custom_types:
   enums: []
-  input_objects: []
+  input_objects:
+    - name: SignInWithGoogleInput
   objects:
     - name: registerResponse
+    - name: SignInWithGoogleOutput
   scalars: []

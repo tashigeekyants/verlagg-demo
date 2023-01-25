@@ -1,7 +1,8 @@
 import { TokenPayload } from 'google-auth-library';
 import { NextFunction, Request, Response } from 'express';
-import googleClient from '../../config/googleClient.js';
-import { USER } from '../../types/loginTypes.js';
+import googleClient from '../../../config/googleClient.js';
+import { USER } from '../../../types/loginTypes.js';
+import { Mutation_RootSignInWithGoogleArgs } from '../../../generated/graphql.js';
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
@@ -10,12 +11,13 @@ export async function verifyGoogleToken(
   res: Response,
   next: NextFunction,
 ) {
-  const token = req.headers?.authorization?.split(' ')[1] || '';
+  const params: Mutation_RootSignInWithGoogleArgs = req.body.input;
+
   const user: USER = {};
 
   try {
     const ticket = await googleClient.verifyIdToken({
-      idToken: token,
+      idToken: params.id_token,
       audience: CLIENT_ID,
     });
     const payload: TokenPayload | undefined = ticket.getPayload();

@@ -6,8 +6,22 @@ type Mutation {
   ): registerResponse
 }
 
+type Mutation {
+  signInWithGoogle(
+    id_token: String!
+  ): SignInWithGoogleOutput
+}
+
+input SignInWithGoogleInput {
+  id_token: String!
+}
+
 type registerResponse {
   id: String!
   name: String!
+}
+
+type SignInWithGoogleOutput {
+  token: String!
 }
 

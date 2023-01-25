@@ -6,9 +6,15 @@ export const REGISTER_USER = gql`
     $email: String = ""
     $name: String = ""
     $password: String = ""
+    $verified: Boolean = false
   ) {
     insert_users_one(
-      object: { email: $email, name: $name, password: $password }
+      object: {
+        email: $email
+        name: $name
+        password: $password
+        verified: $verified
+      }
     ) {
       id
       name

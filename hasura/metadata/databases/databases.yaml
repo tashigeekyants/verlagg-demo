@@ -5,5 +5,4 @@
       database_url: postgres://postgres:postgrespassword@postgres:5432/postgres
       isolation_level: read-committed
       use_prepared_statements: false
-    extensions_schema: verlag
   tables: "!include Verlagg/tables/tables.yaml"

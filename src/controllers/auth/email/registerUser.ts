@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import {
   Register_UserMutation,
   Register_UserMutationVariables,
-} from '../../generated/graphql';
-import { REGISTER_USER } from '../../queries/auth.js';
+} from '../../../generated/graphql';
+import { REGISTER_USER } from '../../../queries/auth.js';
 import bcrypt from 'bcrypt';
-import { client } from '../../utils/apollo.js';
+import { client } from '../../../utils/apollo.js';
 import pkg from '@apollo/client';
 const { ApolloError } = pkg;
 
