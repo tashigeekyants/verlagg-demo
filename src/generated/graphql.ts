@@ -87,6 +87,8 @@ export type Mutation_Root = {
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
   register?: Maybe<RegisterResponse>;
+  /** This action is used to send the sms */
+  sendSMS?: Maybe<SendSmsOutput>;
   /** This action is used to sign in with google */
   signInWithGoogle?: Maybe<SignInWithGoogleOutput>;
   /** update data of the table: "users" */
@@ -95,6 +97,8 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** This action is used to verify the sms */
+  verifySMS?: Maybe<VerifySmsOutput>;
 };
 
 
@@ -107,6 +111,7 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 
@@ -133,6 +138,12 @@ export type Mutation_RootRegisterArgs = {
 
 
 /** mutation root */
+export type Mutation_RootSendSmsArgs = {
+  to: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootSignInWithGoogleArgs = {
   id_token: Scalars['String'];
 };
@@ -155,6 +166,13 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootVerifySmsArgs = {
+  code: Scalars['String'];
+  to: Scalars['String'];
 };
 
 /** column ordering options */
@@ -204,12 +222,18 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 export type RegisterResponse = {
   __typename?: 'registerResponse';
   id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type SendSmsOutput = {
+  __typename?: 'sendSMSOutput';
+  message: Scalars['String'];
 };
 
 export type Subscription_Root = {
@@ -245,6 +269,7 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 
@@ -276,6 +301,7 @@ export type Users = {
   image_url?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password?: Maybe<Scalars['String']>;
+  phone_number: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   verified: Scalars['Boolean'];
 };
@@ -313,13 +339,16 @@ export type Users_Bool_Exp = {
   image_url?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
+  phone_number?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   verified?: InputMaybe<Boolean_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint on columns "email" */
+  /** unique or primary key constraint on columns "phone_number" */
+  UsersPhoneNumberKey = 'users_phone_number_key',
+  /** unique or primary key constraint on columns "email", "phone_number" */
   UsersPkey = 'users_pkey'
 }
 
@@ -331,6 +360,7 @@ export type Users_Insert_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -344,6 +374,7 @@ export type Users_Max_Fields = {
   image_url?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  phone_number?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -356,6 +387,7 @@ export type Users_Min_Fields = {
   image_url?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  phone_number?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -383,6 +415,7 @@ export type Users_Order_By = {
   image_url?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   password?: InputMaybe<Order_By>;
+  phone_number?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   verified?: InputMaybe<Order_By>;
 };
@@ -390,6 +423,7 @@ export type Users_Order_By = {
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 /** select columns of table "users" */
@@ -407,6 +441,8 @@ export enum Users_Select_Column {
   /** column name */
   Password = 'password',
   /** column name */
+  PhoneNumber = 'phone_number',
+  /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
   Verified = 'verified'
@@ -420,6 +456,7 @@ export type Users_Set_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -440,6 +477,7 @@ export type Users_Stream_Cursor_Value_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -458,6 +496,8 @@ export enum Users_Update_Column {
   Name = 'name',
   /** column name */
   Password = 'password',
+  /** column name */
+  PhoneNumber = 'phone_number',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -483,15 +523,11 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type Register_UserMutationVariables = Exact<{
-  email?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-  verified?: InputMaybe<Scalars['Boolean']>;
-}>;
-
-
-export type Register_UserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id?: any | null, name: string } | null };
+export type VerifySmsOutput = {
+  __typename?: 'verifySMSOutput';
+  message: Scalars['String'];
+  token: Scalars['String'];
+};
 
 export type Get_User_By_EmailQueryVariables = Exact<{
   email?: InputMaybe<Scalars['String']>;
@@ -500,9 +536,29 @@ export type Get_User_By_EmailQueryVariables = Exact<{
 
 export type Get_User_By_EmailQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id?: any | null }> };
 
+export type Get_User_By_Phone_NumberQueryVariables = Exact<{
+  phone_number?: InputMaybe<Scalars['String']>;
+}>;
 
-export const Register_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"REGISTER_USER"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"verified"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"verified"},"value":{"kind":"Variable","name":{"kind":"Name","value":"verified"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<Register_UserMutation, Register_UserMutationVariables>;
+
+export type Get_User_By_Phone_NumberQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id?: any | null }> };
+
+export type Register_UserMutationVariables = Exact<{
+  email?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  verified?: InputMaybe<Scalars['Boolean']>;
+  phone_number?: InputMaybe<Scalars['String']>;
+  image_url?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type Register_UserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id?: any | null, name: string } | null };
+
+
 export const Get_User_By_EmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_USER_BY_EMAIL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<Get_User_By_EmailQuery, Get_User_By_EmailQueryVariables>;
+export const Get_User_By_Phone_NumberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GET_USER_BY_PHONE_NUMBER"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<Get_User_By_Phone_NumberQuery, Get_User_By_Phone_NumberQueryVariables>;
+export const Register_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"REGISTER_USER"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"verified"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}},"defaultValue":{"kind":"BooleanValue","value":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"image_url"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"verified"},"value":{"kind":"Variable","name":{"kind":"Name","value":"verified"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"phone_number"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone_number"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"image_url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"image_url"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<Register_UserMutation, Register_UserMutationVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -585,6 +641,8 @@ export type Mutation_Root = {
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
   register?: Maybe<RegisterResponse>;
+  /** This action is used to send the sms */
+  sendSMS?: Maybe<SendSmsOutput>;
   /** This action is used to sign in with google */
   signInWithGoogle?: Maybe<SignInWithGoogleOutput>;
   /** update data of the table: "users" */
@@ -593,6 +651,8 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** This action is used to verify the sms */
+  verifySMS?: Maybe<VerifySmsOutput>;
 };
 
 
@@ -605,6 +665,7 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 
@@ -631,6 +692,12 @@ export type Mutation_RootRegisterArgs = {
 
 
 /** mutation root */
+export type Mutation_RootSendSmsArgs = {
+  to: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootSignInWithGoogleArgs = {
   id_token: Scalars['String'];
 };
@@ -653,6 +720,13 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootVerifySmsArgs = {
+  code: Scalars['String'];
+  to: Scalars['String'];
 };
 
 /** column ordering options */
@@ -702,12 +776,18 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 export type RegisterResponse = {
   __typename?: 'registerResponse';
   id: Scalars['String'];
   name: Scalars['String'];
+};
+
+export type SendSmsOutput = {
+  __typename?: 'sendSMSOutput';
+  message: Scalars['String'];
 };
 
 export type Subscription_Root = {
@@ -743,6 +823,7 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 
@@ -774,6 +855,7 @@ export type Users = {
   image_url?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password?: Maybe<Scalars['String']>;
+  phone_number: Scalars['String'];
   updated_at: Scalars['timestamptz'];
   verified: Scalars['Boolean'];
 };
@@ -811,13 +893,16 @@ export type Users_Bool_Exp = {
   image_url?: InputMaybe<String_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   password?: InputMaybe<String_Comparison_Exp>;
+  phone_number?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   verified?: InputMaybe<Boolean_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint on columns "email" */
+  /** unique or primary key constraint on columns "phone_number" */
+  UsersPhoneNumberKey = 'users_phone_number_key',
+  /** unique or primary key constraint on columns "email", "phone_number" */
   UsersPkey = 'users_pkey'
 }
 
@@ -829,6 +914,7 @@ export type Users_Insert_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -842,6 +928,7 @@ export type Users_Max_Fields = {
   image_url?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  phone_number?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -854,6 +941,7 @@ export type Users_Min_Fields = {
   image_url?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  phone_number?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -881,6 +969,7 @@ export type Users_Order_By = {
   image_url?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   password?: InputMaybe<Order_By>;
+  phone_number?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   verified?: InputMaybe<Order_By>;
 };
@@ -888,6 +977,7 @@ export type Users_Order_By = {
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   email: Scalars['String'];
+  phone_number: Scalars['String'];
 };
 
 /** select columns of table "users" */
@@ -905,6 +995,8 @@ export enum Users_Select_Column {
   /** column name */
   Password = 'password',
   /** column name */
+  PhoneNumber = 'phone_number',
+  /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
   Verified = 'verified'
@@ -918,6 +1010,7 @@ export type Users_Set_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -938,6 +1031,7 @@ export type Users_Stream_Cursor_Value_Input = {
   image_url?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
+  phone_number?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
@@ -956,6 +1050,8 @@ export enum Users_Update_Column {
   Name = 'name',
   /** column name */
   Password = 'password',
+  /** column name */
+  PhoneNumber = 'phone_number',
   /** column name */
   UpdatedAt = 'updated_at',
   /** column name */
@@ -979,4 +1075,10 @@ export type Uuid_Comparison_Exp = {
   _lte?: InputMaybe<Scalars['uuid']>;
   _neq?: InputMaybe<Scalars['uuid']>;
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
+};
+
+export type VerifySmsOutput = {
+  __typename?: 'verifySMSOutput';
+  message: Scalars['String'];
+  token: Scalars['String'];
 };

@@ -2,16 +2,26 @@ actions:
   - name: register
     definition:
       kind: synchronous
-      handler: https://b18b-182-70-25-111.in.ngrok.io/auth/register
+      handler: http://host.docker.internal:8000/auth/register
       forward_client_headers: true
       headers:
         - name: x-hasura-admin-secret
           value: klBiEH1IdfXaXYkHmoMThJKqcgzyogwgzBKZAVBP5fucay3mGshTIWAERmAcq7qZ
+  - name: sendSMS
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:8000/auth/sendSMS
+    comment: This action is used to send the sms
   - name: signInWithGoogle
     definition:
       kind: synchronous
-      handler: https://5e86-182-70-25-111.in.ngrok.io/auth/signInWithGoogle
+      handler: http://host.docker.internal:8000/auth/signInWithGoogle
     comment: This action is used to sign in with google
+  - name: verifySMS
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:8000/auth/verifySMS
+    comment: This action is used to verify the sms
 custom_types:
   enums: []
   input_objects:
@@ -19,4 +29,6 @@ custom_types:
   objects:
     - name: registerResponse
     - name: SignInWithGoogleOutput
+    - name: sendSMSOutput
+    - name: verifySMSOutput
   scalars: []

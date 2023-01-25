@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // routes
-app.get('/', function (req: Request, res: Response) {
+app.get('/', async function (req: Request, res: Response) {
   res.send('server is running');
 });
 

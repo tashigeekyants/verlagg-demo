@@ -7,9 +7,22 @@ type Mutation {
 }
 
 type Mutation {
+  sendSMS(
+    to: String!
+  ): sendSMSOutput
+}
+
+type Mutation {
   signInWithGoogle(
     id_token: String!
   ): SignInWithGoogleOutput
+}
+
+type Mutation {
+  verifySMS(
+    to: String!
+    code: String!
+  ): verifySMSOutput
 }
 
 input SignInWithGoogleInput {
@@ -23,5 +36,14 @@ type registerResponse {
 
 type SignInWithGoogleOutput {
   token: String!
+}
+
+type sendSMSOutput {
+  message: String!
+}
+
+type verifySMSOutput {
+  token: String!
+  message: String!
 }
 

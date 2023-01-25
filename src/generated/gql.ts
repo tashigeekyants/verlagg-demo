@@ -13,8 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n": types.Register_UserDocument,
     "\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n": types.Get_User_By_EmailDocument,
+    "\n  query GET_USER_BY_PHONE_NUMBER($phone_number: String = \"\") {\n    users(where: { phone_number: { _eq: $phone_number } }) {\n      id\n    }\n  }\n": types.Get_User_By_Phone_NumberDocument,
+    "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n    $phone_number: String = \"\"\n    $image_url: String = \"\"\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n        phone_number: $phone_number\n        image_url: $image_url\n      }\n    ) {\n      id\n      name\n    }\n  }\n": types.Register_UserDocument,
 };
 
 /**
@@ -34,11 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n      }\n    ) {\n      id\n      name\n    }\n  }\n"];
+export function graphql(source: "\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query GET_USER_BY_EMAIL($email: String = \"\") {\n    users(where: { email: { _eq: $email } }) {\n      id\n    }\n  }\n"];
+export function graphql(source: "\n  query GET_USER_BY_PHONE_NUMBER($phone_number: String = \"\") {\n    users(where: { phone_number: { _eq: $phone_number } }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query GET_USER_BY_PHONE_NUMBER($phone_number: String = \"\") {\n    users(where: { phone_number: { _eq: $phone_number } }) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n    $phone_number: String = \"\"\n    $image_url: String = \"\"\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n        phone_number: $phone_number\n        image_url: $image_url\n      }\n    ) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  mutation REGISTER_USER(\n    $email: String = \"\"\n    $name: String = \"\"\n    $password: String = \"\"\n    $verified: Boolean = false\n    $phone_number: String = \"\"\n    $image_url: String = \"\"\n  ) {\n    insert_users_one(\n      object: {\n        email: $email\n        name: $name\n        password: $password\n        verified: $verified\n        phone_number: $phone_number\n        image_url: $image_url\n      }\n    ) {\n      id\n      name\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

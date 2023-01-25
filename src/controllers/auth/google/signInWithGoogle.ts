@@ -1,52 +1,40 @@
 import { Request, Response } from 'express';
-import {
-  Get_User_By_EmailQuery,
-  Get_User_By_EmailQueryVariables,
-  Register_UserMutation,
-  Register_UserMutationVariables,
-} from '../../../generated/graphql';
-import { GET_USER_BY_EMAIL, REGISTER_USER } from '../../../queries/auth.js';
-import { client } from '../../../utils/apollo.js';
+import { getUserByEmail } from '../../../utils/db/getUserByEmail.js';
+import { saveUser } from '../../../utils/db/saveUser.js';
 import { generateJWT } from '../../../utils/jwt.js';
 
 export async function signInWithGoogle(req: Request, res: Response) {
   try {
     /** Get user from DB */
-    const { data, errors } = await client.query<
-      Get_User_By_EmailQuery,
-      Get_User_By_EmailQueryVariables
-    >({
-      query: GET_USER_BY_EMAIL,
-      variables: {
-        email: req?.user?.email || '',
-      },
-    });
-    if (errors) return res.status(400).json(errors[0]);
+    const { success, data, message } = await getUserByEmail(
+      req.user?.email || '',
+    );
+
+    if (!success) {
+      throw new Error(message);
+    }
+
     let userId;
-    const isUserRegister = data.users.length !== 0;
+    const isUserRegistered = data?.users.length !== 0;
 
     /** Check whether user is already registered or not */
-    if (!isUserRegister) {
-      /** Register user */
-      const { data, errors } = await client.mutate<
-        Register_UserMutation,
-        Register_UserMutationVariables
-      >({
-        mutation: REGISTER_USER,
-        variables: {
-          email: req.user?.email,
-          name: req.user?.name,
-          password: null,
-          verified: true,
-        },
+    if (!isUserRegistered) {
+      /** Save user in DB */
+      const { data, success, message } = await saveUser({
+        name: req.user?.name,
+        email: req.user?.email,
+        image_url: req.user?.picture,
+        verified: true,
       });
 
-      if (errors) return res.status(400).json(errors[0]);
+      if (!success) {
+        throw new Error(message);
+      }
 
       userId = data?.insert_users_one?.id;
     }
 
-    userId = isUserRegister ? data.users[0].id : userId;
+    userId = isUserRegistered ? data?.users[0].id : userId;
 
     /** Generate JWT token */
     const token = generateJWT({
@@ -56,7 +44,6 @@ export async function signInWithGoogle(req: Request, res: Response) {
         'X-Hasura-User-Id': userId,
       },
     });
-    console.log({ token });
     return res.status(200).json({ token });
   } catch (error) {
     return res.json({ message: error?.message || 'Internal server error' });
