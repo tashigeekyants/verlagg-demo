@@ -7,16 +7,31 @@ actions:
       headers:
         - name: x-hasura-admin-secret
           value: klBiEH1IdfXaXYkHmoMThJKqcgzyogwgzBKZAVBP5fucay3mGshTIWAERmAcq7qZ
+  - name: sendEmail
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:8000/auth/sendEmail
+    comment: sendEmail
   - name: sendSMS
     definition:
       kind: synchronous
       handler: http://host.docker.internal:8000/auth/sendSMS
     comment: This action is used to send the sms
+  - name: signInWithFacebook
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:8000/auth/signInWithFacebook
+    comment: signInWithFacebook
   - name: signInWithGoogle
     definition:
       kind: synchronous
       handler: http://host.docker.internal:8000/auth/signInWithGoogle
     comment: This action is used to sign in with google
+  - name: verifyEmail
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:8000/auth/verifyEmail
+    comment: verifyEmail
   - name: verifySMS
     definition:
       kind: synchronous
@@ -31,4 +46,7 @@ custom_types:
     - name: SignInWithGoogleOutput
     - name: sendSMSOutput
     - name: verifySMSOutput
+    - name: SignInWithFacebookOutput
+    - name: SendEmailOutput
+    - name: VerifyEmailOutput
   scalars: []

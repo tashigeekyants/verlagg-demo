@@ -7,15 +7,34 @@ type Mutation {
 }
 
 type Mutation {
+  sendEmail(
+    toEmail: String!
+  ): SendEmailOutput
+}
+
+type Mutation {
   sendSMS(
     to: String!
   ): sendSMSOutput
 }
 
 type Mutation {
+  signInWithFacebook(
+    id_token: String!
+  ): SignInWithFacebookOutput
+}
+
+type Mutation {
   signInWithGoogle(
     id_token: String!
   ): SignInWithGoogleOutput
+}
+
+type Mutation {
+  verifyEmail(
+    to: String!
+    code: String!
+  ): VerifyEmailOutput
 }
 
 type Mutation {
@@ -45,5 +64,18 @@ type sendSMSOutput {
 type verifySMSOutput {
   token: String!
   message: String!
+}
+
+type SignInWithFacebookOutput {
+  token: String!
+}
+
+type SendEmailOutput {
+  message: String!
+}
+
+type VerifyEmailOutput {
+  message: String!
+  token: String!
 }
 
