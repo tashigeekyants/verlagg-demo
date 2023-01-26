@@ -46,4 +46,41 @@ async function verifySMS(
   }
 }
 
-export default { sendSMS, verifySMS };
+async function sendEmail(to: string): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  try {
+    await client.verify.v2.services(verifySid).verifications.create({
+      to,
+      channel: 'email',
+    });
+    return { success: true, message: 'OTP sent successfully' };
+  } catch (error) {
+    return {
+      success: false,
+      message: error?.message || 'Internal server error',
+    };
+  }
+}
+async function verifyEmail(
+  to: string,
+  code: string,
+): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  try {
+    const verify = await client.verify.v2
+      .services(verifySid)
+      .verificationChecks.create({ to, code });
+    if (verify.valid) {
+      return { success: true, message: 'OTP verified successfully' };
+    }
+    return { success: false, message: 'Invalid OTP' };
+  } catch (error) {
+    return { success: false, message: 'OTP expired. Please resend the OTP' };
+  }
+}
+
+export default { sendSMS, verifySMS, sendEmail, verifyEmail };

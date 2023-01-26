@@ -29,6 +29,16 @@ export type Boolean_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['Boolean']>>;
 };
 
+export type SendEmailOutput = {
+  __typename?: 'SendEmailOutput';
+  message: Scalars['String'];
+};
+
+export type SignInWithFacebookOutput = {
+  __typename?: 'SignInWithFacebookOutput';
+  token: Scalars['String'];
+};
+
 export type SignInWithGoogleOutput = {
   __typename?: 'SignInWithGoogleOutput';
   token: Scalars['String'];
@@ -67,6 +77,12 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']>;
 };
 
+export type VerifyEmailOutput = {
+  __typename?: 'VerifyEmailOutput';
+  message: Scalars['String'];
+  token: Scalars['String'];
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -87,8 +103,12 @@ export type Mutation_Root = {
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
   register?: Maybe<RegisterResponse>;
+  /** sendEmail */
+  sendEmail?: Maybe<SendEmailOutput>;
   /** This action is used to send the sms */
   sendSMS?: Maybe<SendSmsOutput>;
+  /** signInWithFacebook */
+  signInWithFacebook?: Maybe<SignInWithFacebookOutput>;
   /** This action is used to sign in with google */
   signInWithGoogle?: Maybe<SignInWithGoogleOutput>;
   /** update data of the table: "users" */
@@ -97,6 +117,8 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** verifyEmail */
+  verifyEmail?: Maybe<VerifyEmailOutput>;
   /** This action is used to verify the sms */
   verifySMS?: Maybe<VerifySmsOutput>;
 };
@@ -111,7 +133,6 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 
@@ -138,8 +159,20 @@ export type Mutation_RootRegisterArgs = {
 
 
 /** mutation root */
+export type Mutation_RootSendEmailArgs = {
+  toEmail: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootSendSmsArgs = {
   to: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootSignInWithFacebookArgs = {
+  id_token: Scalars['String'];
 };
 
 
@@ -166,6 +199,13 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootVerifyEmailArgs = {
+  code: Scalars['String'];
+  to: Scalars['String'];
 };
 
 
@@ -222,7 +262,6 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 export type RegisterResponse = {
@@ -269,7 +308,6 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 
@@ -301,7 +339,7 @@ export type Users = {
   image_url?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password?: Maybe<Scalars['String']>;
-  phone_number: Scalars['String'];
+  phone_number?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
   verified: Scalars['Boolean'];
 };
@@ -346,9 +384,7 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint on columns "phone_number" */
-  UsersPhoneNumberKey = 'users_phone_number_key',
-  /** unique or primary key constraint on columns "email", "phone_number" */
+  /** unique or primary key constraint on columns "email" */
   UsersPkey = 'users_pkey'
 }
 
@@ -423,7 +459,6 @@ export type Users_Order_By = {
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 /** select columns of table "users" */
@@ -507,6 +542,7 @@ export enum Users_Update_Column {
 export type Users_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Users_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Users_Bool_Exp;
 };
 
@@ -583,6 +619,16 @@ export type Boolean_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['Boolean']>>;
 };
 
+export type SendEmailOutput = {
+  __typename?: 'SendEmailOutput';
+  message: Scalars['String'];
+};
+
+export type SignInWithFacebookOutput = {
+  __typename?: 'SignInWithFacebookOutput';
+  token: Scalars['String'];
+};
+
 export type SignInWithGoogleOutput = {
   __typename?: 'SignInWithGoogleOutput';
   token: Scalars['String'];
@@ -621,6 +667,12 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']>;
 };
 
+export type VerifyEmailOutput = {
+  __typename?: 'VerifyEmailOutput';
+  message: Scalars['String'];
+  token: Scalars['String'];
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -641,8 +693,12 @@ export type Mutation_Root = {
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
   register?: Maybe<RegisterResponse>;
+  /** sendEmail */
+  sendEmail?: Maybe<SendEmailOutput>;
   /** This action is used to send the sms */
   sendSMS?: Maybe<SendSmsOutput>;
+  /** signInWithFacebook */
+  signInWithFacebook?: Maybe<SignInWithFacebookOutput>;
   /** This action is used to sign in with google */
   signInWithGoogle?: Maybe<SignInWithGoogleOutput>;
   /** update data of the table: "users" */
@@ -651,6 +707,8 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** verifyEmail */
+  verifyEmail?: Maybe<VerifyEmailOutput>;
   /** This action is used to verify the sms */
   verifySMS?: Maybe<VerifySmsOutput>;
 };
@@ -665,7 +723,6 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 
@@ -692,8 +749,20 @@ export type Mutation_RootRegisterArgs = {
 
 
 /** mutation root */
+export type Mutation_RootSendEmailArgs = {
+  toEmail: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootSendSmsArgs = {
   to: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootSignInWithFacebookArgs = {
+  id_token: Scalars['String'];
 };
 
 
@@ -720,6 +789,13 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootVerifyEmailArgs = {
+  code: Scalars['String'];
+  to: Scalars['String'];
 };
 
 
@@ -776,7 +852,6 @@ export type Query_RootUsers_AggregateArgs = {
 
 export type Query_RootUsers_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 export type RegisterResponse = {
@@ -823,7 +898,6 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 export type Subscription_RootUsers_By_PkArgs = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 
@@ -855,7 +929,7 @@ export type Users = {
   image_url?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password?: Maybe<Scalars['String']>;
-  phone_number: Scalars['String'];
+  phone_number?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
   verified: Scalars['Boolean'];
 };
@@ -900,9 +974,7 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint on columns "phone_number" */
-  UsersPhoneNumberKey = 'users_phone_number_key',
-  /** unique or primary key constraint on columns "email", "phone_number" */
+  /** unique or primary key constraint on columns "email" */
   UsersPkey = 'users_pkey'
 }
 
@@ -977,7 +1049,6 @@ export type Users_Order_By = {
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
   email: Scalars['String'];
-  phone_number: Scalars['String'];
 };
 
 /** select columns of table "users" */
@@ -1061,6 +1132,7 @@ export enum Users_Update_Column {
 export type Users_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Users_Set_Input>;
+  /** filter the rows which have to be updated */
   where: Users_Bool_Exp;
 };
 
