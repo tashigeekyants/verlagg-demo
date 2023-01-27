@@ -3,7 +3,6 @@ import { sendEmail } from '../controllers/auth/email/sendEmail.js';
 import { verifyEmail } from '../controllers/auth/email/verifyEmail.js';
 import {
   signInWithGoogle,
-  registerUser,
   verifyGoogleToken,
   sendSMS,
   verifySMS,
@@ -11,8 +10,6 @@ import {
   signInFacebook,
 } from '../controllers/auth/index.js';
 const router = express.Router();
-
-router.route('/register').post(registerUser);
 
 // sign in with google account
 router.route('/signInWithGoogle').post(verifyGoogleToken, signInWithGoogle);
